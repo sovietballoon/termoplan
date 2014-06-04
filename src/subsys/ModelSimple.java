@@ -3,27 +3,28 @@ package subsys;
 import subsys.*;
 import java.util.*;
 /*
-Абстрактный класс модели расчета
+РђР±СЃС‚СЂР°РєС‚РЅС‹Р№ РєР»Р°СЃСЃ РјРѕРґРµР»Рё СЂР°СЃС‡РµС‚Р°
 
-Пример расчета. Простой перебор
-TODO: 
- - смежные режимы
- - ограничения по толщине
- - разбирать неукомплектованные стопы
+РџСЂРёРјРµСЂ СЂР°СЃС‡РµС‚Р°. РџСЂРѕСЃС‚РѕР№ РїРµСЂРµР±РѕСЂ
+TODO:
+ - СЃРјРµР¶РЅС‹Рµ СЂРµР¶РёРјС‹
+ - РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РїРѕ С‚РѕР»С‰РёРЅРµ
+ - РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РїРѕ РІРµСЃСѓ
+ - СЂР°Р·Р±РёСЂР°С‚СЊ РЅРµСѓРєРѕРјРїР»РµРєС‚РѕРІР°РЅРЅС‹Рµ СЃС‚РѕРїС‹
 */
 
 public class ModelSimple extends Model{
 	private Config config;
 	/*
-	Инициализация модели
+	РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјРѕРґРµР»Рё
 	*/
 	public ModelSimple(Config config){
 		this.config = config;
 	}
-	
+
 	/*
-	Запуск расчета
-		возвращает список стоп => список id рулонов
+	Р—Р°РїСѓСЃРє СЂР°СЃС‡РµС‚Р°
+		РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє СЃС‚РѕРї => СЃРїРёСЃРѕРє id СЂСѓР»РѕРЅРѕРІ
 	*/
 	public List<List> calculate(Map<Integer, Coil> coils){
 		List<List> furns = new ArrayList<List>();
@@ -32,29 +33,29 @@ public class ModelSimple extends Model{
 		Integer furn_height = 0;
 		List<Coil> coils_list = new ArrayList<Coil>(coils.values());
 		List<Coil> coils_ost = new ArrayList<Coil>();
-		
-		
-		//Сортировка рулонов по: приоритет, ширина, партия
+
+
+		//РЎРѕСЂС‚РёСЂРѕРІРєР° СЂСѓР»РѕРЅРѕРІ РїРѕ: РїСЂРёРѕСЂРёС‚РµС‚, С€РёСЂРёРЅР°, РїР°СЂС‚РёСЏ
 		Collections.sort(coils_list, new Comparator<Coil>() {
             @Override
             public int compare(Coil c1, Coil c2) {
-				// "100000 -" для сортировки по убыванию
-				// TODO: заменить на max_prior, max_width
+				// "100000 -" РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё РїРѕ СѓР±С‹РІР°РЅРёСЋ
+				// TODO: Р·Р°РјРµРЅРёС‚СЊ РЅР° max_prior, max_width
 				String v1 = String.valueOf(1000000 - c1.prior) + '-' + String.valueOf(100000 - c1.width) + '-' + c1.batch;
 				String v2 = String.valueOf(1000000 - c2.prior) + '-' + String.valueOf(100000 - c1.width) + '-' + c1.batch;
                 return ((String) v2).compareTo((String) v1);
             }
         });
-		
-		
+
+
 		while(coils_list.size() != 0){
 			for (Coil coil: coils_list){
 				if (furn.size() == 0){
 					furn.add(coil);
 					furn_regim = coil.regim;
 					furn_height = coil.width;
-				}else if(coil.regim.equals(furn_regim) 
-						&& (furn_height + coil.width) < this.config.FURN_HEIGHT 
+				}else if(coil.regim.equals(furn_regim)
+						&& (furn_height + coil.width) < this.config.FURN_HEIGHT
 						&& furn.size() < this.config.FURN_COIL_MAX){
 					furn.add(coil);
 					furn_height += coil.width;
