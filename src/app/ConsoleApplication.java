@@ -22,8 +22,9 @@ public class ConsoleApplication {
 			// init model
 			ModelSimple model = new ModelSimple(config);
 			
-			//List<List> Output = model.calculate(coils);
-			
+			List<List> output = model.calculate(coils);
+			//ТОDO: расчет итогов, КПД печи
+			//System.out.printf("furns=%s furn.size=%s ost=%s \n", furns.size(), furns.get(furns.size()-1).size(), coils_list.size());
 		}catch(Exception  e){
 			log.log(Level.SEVERE, "Exception: ", e);
 		}
