@@ -5,6 +5,11 @@ import java.util.*;
 /*
 Абстрактный класс модели расчета
 
+Пример расчета. Простой перебор
+TODO: 
+ - смежные режимы
+ - ограничения по толщине
+ - разбирать неукомплектованные стопы
 */
 
 public class ModelSimple extends Model{
@@ -49,11 +54,10 @@ public class ModelSimple extends Model{
 					furn_regim = coil.regim;
 					furn_height = coil.width;
 				}else if(coil.regim.equals(furn_regim) 
-						&& (furn_height + coil.width) < this.config.FURN_HEIGHT
+						&& (furn_height + coil.width) < this.config.FURN_HEIGHT 
 						&& furn.size() < this.config.FURN_COIL_MAX){
 					furn.add(coil);
 					furn_height += coil.width;
-					}
 				}else{
 					coils_ost.add(coil);
 				}
