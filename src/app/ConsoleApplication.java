@@ -20,7 +20,7 @@ public class ConsoleApplication {
 			log.info("Load " + coils.size() + " coils");
 			
 			// init model
-			//ModelSimple model = new ModelSimple(config);
+			ModelSimple model = new ModelSimple(config);
 			
 			//List<List> Output = model.calculate(coils);
 			
