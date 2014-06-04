@@ -9,7 +9,7 @@ package subsys;
 
 public class Config{
 
-	public static String DATAFILE = "data/test_data.csv";
+	public static String DATAFILE = "data/export.dsv";
 	
 	public static String DATAFILE_SPLIT = ";";
 	

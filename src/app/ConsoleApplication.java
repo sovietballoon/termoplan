@@ -20,9 +20,9 @@ public class ConsoleApplication {
 			log.info("Load " + coils.size() + " coils");
 			
 			// init model
-			ModelSimple model = new ModelSimple(config);
+			//ModelSimple model = new ModelSimple(config);
 			
-			List<List> Output = model.calculate(coils);
+			//List<List> Output = model.calculate(coils);
 			
 		}catch(Exception  e){
 			log.log(Level.SEVERE, "Exception: ", e);
