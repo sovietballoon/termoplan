@@ -20,10 +20,11 @@ public class ConsoleApplication {
 			log.info("Load " + coils.size() + " coils");
 			
 			// init model
-			Model model = new ModelSimple(config);
+			ModelSimple model1 = new ModelSimple(config);
+			Model1 model = new Model1(config);
 			List<List> output = model.calculate(coils);
 			
-			// Вывод результата, оценка алгоритма
+			// Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р°, РѕС†РµРЅРєР° Р°Р»РіРѕСЂРёС‚РјР°
 			String regim = "";
 			double kpd = 0;
 			double kpd_all = 0;
