@@ -37,7 +37,7 @@ private Config config;
 		//TypeChanger tch = new TypeChanger();
 		String addittype = null;
 		boolean flag = false;
-		int n_valid_thick = 0, n =0, reg_1 = 0, reg_2 = 0, reg_3 = 0, reg_4 = 0, reg_5 = 0;
+		int n_valid_thick = 0, n =0, reg_1 = 0, reg_2 = 0, reg_3 = 0, reg_4 = 0, reg_5 = 0, kol = 0;
 		
 		//Сортировка рулонов по: приоритет, ширина, партия
 		Collections.sort(coils_list, new Comparator<Coil>() {
@@ -45,8 +45,8 @@ private Config config;
             public int compare(Coil c1, Coil c2) {
 				// "100000 -" для сортировки по убыванию
 				// TODO: заменить на max_prior, max_width
-				String v1 = String.valueOf(1000000 - c1.prior) + '-' + String.valueOf(100000 - c1.width) + '-' + c1.batch;
-				String v2 = String.valueOf(1000000 - c2.prior) + '-' + String.valueOf(100000 - c1.width) + '-' + c1.batch;
+				String v1 = String.valueOf(Math.abs(1000000 - c1.prior)) + '-' + String.valueOf(100000 - c1.width) + '-' + c1.batch;
+				String v2 = String.valueOf(Math.abs(1000000 - c2.prior)) + '-' + String.valueOf(100000 - c1.width) + '-' + c1.batch;
                 return ((String) v2).compareTo((String) v1);
             }
         });
@@ -77,7 +77,7 @@ private Config config;
 		reg_4 = reg_4 / 4;
 		reg_5 = reg_5 / 4;
 		
-		System.out.printf("regim_1 " + reg_1 + " regim_2 " + reg_2 + " regim_3 " + reg_3 + " regim_4 " + reg_4 + " regim_5 " + reg_5 + "\n");
+		System.out.printf("regim_1 (" + reg_1 + ") regim_2 (" + reg_2 + ") regim_3 (" + reg_3 + ") regim_4 (" + reg_4 + ") regim_5 (" + reg_5 + ")\n");
 		//while(coils_list.size() != 0){
 			for (Coil coil: coils_list){
 			//for (int i = 0; i <= n_valid_thick; i++){
@@ -127,11 +127,15 @@ private Config config;
 			for (Coil coil: coils_list){
 				if (furn.size() == 0
 						&& coil.thick < config.FURN_ONE_COIL_THINK_MORE){
-					
+					//kol += 1;
 					coils_ost.add(coil);
+					//if (kol == coils_list.size()){
+					//	flag = true;
+					//}
 					// флаг на выход из общего цикла. Условия будут дорабатываться. 
 					//Суть в выходе из циклов, когда элементов с необходмой толщиной уже не будет.
-					flag = true; 
+					//System.out.printf("kol " + kol + "\n");
+					flag = true; //!!!
 				}
 				else if (furn.size() == 0
 						&& coil.thick > config.FURN_ONE_COIL_THINK_MORE
@@ -141,7 +145,7 @@ private Config config;
 					furn_regim = coil.regim;
 					furn_height = coil.width;
 					weight_difference = coil.weight;
-					System.out.printf("thick_1 = " + coil.thick + " ");					
+					System.out.printf("prior " + coil.prior + " regim " + coil.regim + " thick_1 = " + coil.thick + " width " + coil.width + " weight " + coil.weight + " ");					
 					// конечно же, надо придумать более адекватную модель сравнения режимов 
 					//относительно данных в конфиге, но пока так
 					if (coil.regim.equals("1")) 
@@ -162,7 +166,7 @@ private Config config;
 						){					
 					furn.add(coil);
 					furn_height += coil.width;
-					System.out.printf("thick_n = " + coil.thick + " ");
+					System.out.printf("thick_n = " + coil.thick + " weight " + coil.weight + " ");
 				}else{
 					coils_ost.add(coil);
 				}
@@ -172,9 +176,35 @@ private Config config;
 			coils_list = coils_ost;
 			furn = new ArrayList<Coil>();
 			coils_ost = new ArrayList<Coil>();
-			if (flag)
+			kol = 0;
+			for (Coil coil: coils_list){
+				if (coil.thick > config.FURN_ONE_COIL_THINK_MORE) break;
+				else kol += 1;			
+			}
+			if (kol == coils_list.size()) {
+				for (Coil coil: coils_list){
+				System.out.printf("id " + coil.id + " regim " + coil.regim + " prior " + coil.prior + " thick " + coil.thick + " width " + coil.width + " weight " + coil.weight + "\n");
+				}
 				break;
+			}
+			/*{
+			}
+				flag = true;
+			}
+			if (flag){
+				for (Coil coil: coils_list){
+				//System.out.printf("coils_list.size = " + coils_list.size() + "\n ");
+				//System.out.printf("kol " + kol + "\n");
+					System.out.printf("id " + coil.id + " regim " + coil.regim + " prior " + coil.prior + " thick " + coil.thick + " width " + coil.width + " weight " + coil.weight + "\n");
+				}
+				
+			}*/
+			
+				
+			
+				
 		}
+		System.out.printf("\n");
 		return furns;
 	}	
 }
