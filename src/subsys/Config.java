@@ -2,7 +2,7 @@ package subsys;
 
 //import org.json.JSONObject;
 /*
-Настройки приложения
+РќР°СЃС‚СЂРѕР№РєРё РїСЂРёР»РѕР¶РµРЅРёСЏ
 
 
 */
@@ -15,15 +15,46 @@ public class Config{
 	
 	public static String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 	
-	// максимальная разница в весе рулонов в стопе < 7т
+	// РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ СЂР°Р·РЅРёС†Р° РІ РІРµСЃРµ СЂСѓР»РѕРЅРѕРІ РІ СЃС‚РѕРїРµ < 7С‚
 	public static double FURN_WEIGHT_DIFF_MAX = 7.0;
 	
-	// высота печи 5400 мм, высота колец 50 мм
+	// РІС‹СЃРѕС‚Р° РїРµС‡Рё 5400 РјРј, РІС‹СЃРѕС‚Р° РєРѕР»РµС† 50 РјРј
 	public static int FURN_HEIGHT = 5200;
 	
-	// в стопе не более 4х рулонов
+	// РІ СЃС‚РѕРїРµ РЅРµ Р±РѕР»РµРµ 4С… СЂСѓР»РѕРЅРѕРІ
 	public static int FURN_COIL_MAX = 4;
 	
-	// рулонов толщиной <= 6 мм  в стопе не более 3х шт (т.е. минимум 1 рулон толщиной >0.6мм)
+	// СЂСѓР»РѕРЅРѕРІ С‚РѕР»С‰РёРЅРѕР№ <= 6 РјРј  РІ СЃС‚РѕРїРµ РЅРµ Р±РѕР»РµРµ 3С… С€С‚ (С‚.Рµ. РјРёРЅРёРјСѓРј 1 СЂСѓР»РѕРЅ С‚РѕР»С‰РёРЅРѕР№ >0.6РјРј)
 	public static double FURN_ONE_COIL_THINK_MORE = 0.6;
+	
+	//С‚РёРїС‹ СЂСѓР»РѕРЅРѕРІ СЃС‚Р°Р»Рё РґР»СЏ РІРѕРґРѕСЂРѕРґРЅС‹С… РїРµС‡РµР№ (РЅР°Р·РІР°РЅРёСЏ РІСЂРµРјРµРЅРЅС‹Рµ)
+	public static String TYPE_1 = "1";
+	
+	public static String TYPE_2 = "2";
+	
+	public static String TYPE_3 = "3";
+	
+	public static String TYPE_4 = "4";
+	
+	public static String TYPE_5 = "5";
+	
+	public String tySort (String qur_type) {
+		String add_type = null;
+		if (qur_type.equals(Config.TYPE_1)){
+			add_type = Config.TYPE_2;
+		}
+		if (qur_type.equals(Config.TYPE_2)){
+			add_type = Config.TYPE_3;
+		}
+		if (qur_type.equals(Config.TYPE_3)){
+			add_type = Config.TYPE_4;
+		}
+		if (qur_type.equals(Config.TYPE_4)){
+			add_type = Config.TYPE_5;
+		}
+		if (qur_type.equals(Config.TYPE_5)){
+			add_type = Config.TYPE_5;
+		}
+		return add_type;	
+	};
 }
